@@ -1,5 +1,6 @@
 package com.back.global.initData;
 
+import com.back.domain.post.post.entity.Post;
 import com.back.domain.post.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -14,10 +15,22 @@ public class BaseInitData {
     @Bean
     ApplicationRunner baseInitDataApplicationRunner() {
         return args -> {
+            if (postRepository.count() > 0) {
+                return;
+            }
+
+            Post post1 = new Post();
+            post1.setTitle("제목1");
+
+            postRepository.save(post1);
+
+            Post post2 = new Post();
+            post2.setTitle("제목2");
+
+            postRepository.save(post2);
+
             System.out.println("기본 데이터가 초기화되엇습니다.");
 
-            postRepository.count();
-            // SELECT COUNT(*) FROM post;
         };
     }
 }
